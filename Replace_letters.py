@@ -8,7 +8,8 @@ print("______________________________") """
 def Path1():
     
     #path = str(z)
-    path =r"F:"
+    #path = r"F:"
+    path = r"D:\Torrents_Movies\Torrenti\Better.Call.Saul.Season.6"
 
     #permission = 'chown -R ZOHAN ' #  1. 'chmod -R 777 ' 2. 'chown -R ZOHAN '
 
@@ -25,7 +26,13 @@ def Path1():
 
     for file in srt_files:
         if file.endswith(".srt"):
-            input = open(file, "r", encoding="ISO-8859-1" and "utf8") # try ="utf8" or ="ISO-8859-1" <-- UnicodeEncodeError: 'charmap' codec can't encode character '\u?' in position ?: character maps to <undefined>
+            """ try:
+                input = open(file, "r", encoding="utf8")
+                print("utf8 --- encoding")
+            except UnicodeEncodeError:
+                input = open(file, "r", encoding="ISO-8859-1")
+                print("ISO-8859-1 --- encoding") """
+            input = open(file, "r", encoding="ansi") # try  "ansi", "utf8" or ="ISO-8859-1" <-- UnicodeEncodeError: 'charmap' codec can't encode character '\u?' in position ?: character maps to <undefined>
             print(file)
 
             data = input.read()
@@ -38,34 +45,7 @@ def Path1():
 
 Path1()
 
-""" if len(sys.argv) == 1:
-            path = r"C:\Users\ZOHAN\Documents\VS_Code_Projects\Titlovi\test"
-            # path = r"D:\Torrents_Movies\Torrenti\Better.Call.Saul.Season.6"
-	        # path =r"F:"
-    else:
-        #try:
-        path = sys.argv[1]
-        print(path)
-     except Exception:
-        print("Error: Invalid or incorrect path!")"""
 
-""" print(all_srt_files)
-print(len(all_srt_files))
-for i in all_srt_files:
-    print(i)
- """
-
-"""  infiles = path + file
-    print("started Conversion: " + infiles)
-    with open(infiles, 'r') as infiles:
-        filedata = infiles.read()
-        freq = 0
-        freq = filedata.count(lett1)
-    destination = path + file
-    filedata = filedata.replace(lett1.lett2)
-    with open(destination, 'w+') as file:
-        file.write(filedata)
-    print ('Total %d Replaced' %freq) """
 
 # __________________IMPORTANT____________________#
 # Error: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xc6 in position 0: invalid continuation byte -> [ Because there is � broken char in file ] or someting else
