@@ -1,15 +1,11 @@
 import sys, os
+import chardet 
 from pathlib import Path
-
-""" z = input("Input path: ")
-print(z)
-print("______________________________") """
 
 def Path1():
     
-    #path = str(z)
-    #path = r"F:"
-    path = r"D:\Torrents_Movies\Torrenti\Better.Call.Saul.Season.6"
+    path = r"F:"
+    #path = r"D:\Torrents_Movies\Torrenti\Better.Call.Saul.Season.6"
 
     #permission = 'chown -R ZOHAN ' #  1. 'chmod -R 777 ' 2. 'chown -R ZOHAN '
 
@@ -26,14 +22,13 @@ def Path1():
 
     for file in srt_files:
         if file.endswith(".srt"):
-            """ try:
-                input = open(file, "r", encoding="utf8")
-                print("utf8 --- encoding")
-            except UnicodeEncodeError:
-                input = open(file, "r", encoding="ISO-8859-1")
-                print("ISO-8859-1 --- encoding") """
-            input = open(file, "r", encoding="ansi") # try  "ansi", "utf8" or ="ISO-8859-1" <-- UnicodeEncodeError: 'charmap' codec can't encode character '\u?' in position ?: character maps to <undefined>
-            print(file)
+
+            rawdata = open(file, 'rb').read() # detects which encoding text format is in the file
+            result = chardet.detect(rawdata)
+            charenc = result['encoding']
+            
+            input = open(file, "r", encoding=charenc) # puts the right encoding format // It fixed the error <-- UnicodeEncodeError: 'charmap' codec can't encode character '\u?' in position ?: character maps to <undefined>
+            print(f"{file}\t(encoding = {charenc})")
 
             data = input.read()
             for r in (strange_char):
@@ -43,9 +38,12 @@ def Path1():
             output.write(data)
             output= open(file, "r")
 
+            
+    print(f"\nDone - Characters replaced successfully!")
+
 Path1()
 
 
 
 # __________________IMPORTANT____________________#
-# Error: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xc6 in position 0: invalid continuation byte -> [ Because there is � broken char in file ] or someting else
+# Error: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xc6 in position 0: invalid continuation byte -> Shows up because of different encoding fomats like: utf8, ANSI, ISO-8859-1, utf16 etc.
