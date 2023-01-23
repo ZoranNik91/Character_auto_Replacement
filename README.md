@@ -10,5 +10,3 @@ The program is written in python which detects all non-ASCII characters in .srt 
     'č' -> 'c'
     'ü' -> 'u'
      and etc.
-     
- (I am using NOA Smart TV which supports only ASCII characters)
